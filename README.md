@@ -1,13 +1,22 @@
-# snake
-Snake - The Game
+# Znake - The Game
+🐍
+Welcome to Znake - The Game. A classic game brought to life with Python and best practices.
 
-# This repo
-While not the most technically impressive repository, this is a small demo of good developer principles and practises.
-I have:
-- Raised PRs into the main branch, and have a clean commit history.
-- Added unit tests.
-- Added a linter and CI pipeline.
-- Added a deployment workflow.
+## This Repo
+🛠️
+While the game itself is a fun demo, this repository also showcases some important developer practices and principles. Here’s what I’ve included:
 
-On top of this, there is a playable game of snake.
-Please enjoy :) 
+- Version Control: Clean commit history with PRs raised into the main branch.
+
+- Unit Testing: Comprehensive unit tests to ensure everything works smoothly.
+
+- Linter: Integrated code quality checks to keep the code clean and readable.
+
+- CI/CD Pipeline: Automated Continuous Integration and Deployment workflows for seamless development.
+
+Not only does this repo showcase solid software development principles, but there’s also a playable Snake game here to enjoy. 🎮
+
+## Setting Up the Project Locally
+⚙
+If you want to run the game locally, simply run the python executable found within the latest version of the game.
+It's that easy!
