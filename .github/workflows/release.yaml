@@ -1,0 +1,74 @@
+name: Build & Release EXE
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Build and Release if Version is New
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # Needed to create releases
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: Get version from pyproject.toml
+        id: get_version
+        run: |
+          VERSION=$(poetry version -s)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get latest GitHub release version
+        id: get_latest_release
+        run: |
+          LATEST=$(curl --silent "https://api.github.com/repos/${{ github.repository }}/releases/latest" | jq -r .tag_name)
+          echo "latest=$LATEST" >> $GITHUB_OUTPUT || echo "No releases yet"
+
+      - name: Compare versions
+        id: version_check
+        run: |
+          CURRENT="${{ steps.get_version.outputs.version }}"
+          LATEST="${{ steps.get_latest_release.outputs.latest }}"
+          if [ "$LATEST" = "null" ] || [ "$(printf "$LATEST\n$CURRENT" | sort -V | tail -n1)" = "$CURRENT" ] && [ "$CURRENT" != "$LATEST" ]; then
+            echo "should_release=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_release=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install PyInstaller
+        if: steps.version_check.outputs.should_release == 'true'
+        run: |
+          poetry run pip install pyinstaller
+
+      - name: Build EXE
+        if: steps.version_check.outputs.should_release == 'true'
+        run: |
+          poetry run pyinstaller --onefile main.py
+          mkdir dist-upload
+          mv dist/main dist-upload/znake.exe
+
+      - name: Create GitHub release
+        if: steps.version_check.outputs.should_release == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.get_version.outputs.version }}
+          name: Release ${{ steps.get_version.outputs.version }}
+          files: dist-upload/znake.exe
