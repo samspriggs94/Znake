@@ -1,5 +1,4 @@
-from tkinter import *
-from tkinter import ttk
+from tkinter import Tk, Canvas
 
 if __name__ == "__main__":
     # Create the main window
@@ -25,4 +24,3 @@ if __name__ == "__main__":
 
     # Start the event loop
     root.mainloop()
-

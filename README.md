@@ -14,7 +14,7 @@ While the game itself is a fun demo, this repository also showcases some importa
 
 - CI/CD Pipeline: Automated Continuous Integration and Deployment workflows for seamless development.
 
-Not only does this repo showcase solid software development principles, but there’s also a playable Snake game here to enjoy. 🎮
+Not only does this repo showcase solid software development principles, but there’s also a playable Znake game here to enjoy. 🎮
 
 ## Setting Up the Project Locally
 ⚙
