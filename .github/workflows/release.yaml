@@ -1,6 +1,7 @@
 name: Build & Release EXE
 
 on:
+  pull_request:
   push:
     branches:
       - main
@@ -22,13 +23,10 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Poetry
+      - name: Install Dependencies
         run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-
-      - name: Install dependencies
-        run: |
-          poetry install
+          python3 -m pip install --upgrade pip setuptools wheel poetry
+          poetry install --no-root
 
       - name: Get version from pyproject.toml
         id: get_version
