@@ -60,7 +60,7 @@ jobs:
       - name: Build EXE with PyInstaller
         if: steps.version_check.outputs.should_release == 'true'
         run: |
-          poetry run pyinstaller --onefile main.py
+          poetry run pyinstaller --onefile znakegame/main.py
           mkdir dist-upload
           move dist\main.exe dist-upload\znake.exe
 
