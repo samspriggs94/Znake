@@ -2,8 +2,8 @@
 
 import pytest
 from unittest.mock import MagicMock
-from main import ZnakeGame
-from enums import GridSpecs
+from znakegame.enums import GridSpecs
+from znakegame.main import ZnakeGame
 
 
 @pytest.fixture

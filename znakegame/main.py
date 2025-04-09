@@ -1,12 +1,13 @@
 import tkinter as tk
+from tkinter import Event
 
-from enums import GridSpecs
+from znakegame.enums import GridSpecs
 
 
 class ZnakeGame:
     """A class to represent a Znake game."""
 
-    def __init__(self, game_window) -> None:
+    def __init__(self, game_window: tk.Tk) -> None:
         self.game_window = game_window
         self.game_window.title("znake Game")
         self.canvas = tk.Canvas(
@@ -41,7 +42,7 @@ class ZnakeGame:
                 font=("Arial", 24),
             )
 
-    def change_direction(self, event) -> None:
+    def change_direction(self, event: Event) -> None:  # type: ignore[type-arg]
         """Based on user key input, change the direction of the znake."""
         if event.keysym in self.directions():
             new_dir = event.keysym

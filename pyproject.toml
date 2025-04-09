@@ -1,16 +1,14 @@
 [project]
-name = "znake"
-version = "0.1.0"
-description = "Znake, The Game"
-authors = [
-    {name = "samspriggs94",email = "samspriggs94@outlook.com"}
-]
 license = {text = "None"}
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = [
-]
 
+[tool.poetry]
+name = "znake"
+version = "0.2.0"
+description = "Znake, The Game"
+authors = ["samspriggs94"]
+packages = [{ include = "znakegame" }]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
