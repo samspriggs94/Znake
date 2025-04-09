@@ -2,11 +2,6 @@ name: CI workflow
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
-    tags:
-      - v*
 
 concurrency:
   group: ${{ github.ref }}
