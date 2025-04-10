@@ -1,7 +1,7 @@
 [tool.poetry]
 readme = "README.md"
 name = "znake"
-version = "0.2.0"
+version = "0.3.0"
 description = "Znake, The Game"
 authors = ["samspriggs94"]
 packages = [{ include = "znakegame" }]
