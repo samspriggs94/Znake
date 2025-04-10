@@ -17,12 +17,28 @@ class ZnakeGame:
             height=GridSpecs.HEIGHT.value,
             bg="black",
         )
-        self.canvas.pack()
-        self.znake = [(5, 5), (4, 5), (3, 5)]
         self.direction = "Right"
+        self.znake = [(5, 5), (4, 5), (3, 5)]
+        self.food = self.spawn_food()
+        self.canvas.pack()
         self.game_window.bind("<KeyPress>", self.change_direction)
         self.running = True
-        self.food = self.spawn_food()
+        self.awaiting_restart = False
+        self.score = 0
+
+    def handle_restart(self, event: Event) -> None:  # type: ignore[type-arg]
+        """
+        Handle the game restarting by unbinding the restart key, and re-binding the direction keys.
+        Also reset relevant game mechanics to ensure a clean start.
+        """
+
+        self.game_window.unbind("<Key>")
+        self.game_window.bind("<KeyPress>", self.change_direction)
+        self.awaiting_restart = False
+        self.running = True
+        self.direction = "Right"
+        self.znake = [(5, 5), (4, 5), (3, 5)]
+        self.score = 0
         self.game_loop()
 
     def game_loop(self) -> None:
@@ -35,14 +51,16 @@ class ZnakeGame:
             self.move_znake()
             self.draw()
             self.game_window.after(GridSpecs.DELAY, self.game_loop)
-        else:
+        elif not self.awaiting_restart:
             self.canvas.create_text(
                 GridSpecs.WIDTH // 2,
                 GridSpecs.HEIGHT // 2,
-                text="Game Over",
+                text=f"Game Over - Score: {self.score}",
                 fill="white",
                 font=("Arial", 24),
             )
+            self.awaiting_restart = True
+            self.game_window.bind("<Key>", self.handle_restart)
 
     def change_direction(self, event: Event) -> None:  # type: ignore[type-arg]
         """Based on user key input, change the direction of the znake."""
@@ -87,6 +105,7 @@ class ZnakeGame:
         self.znake.insert(0, new_head)
         if new_head == self.food:
             self.food = self.spawn_food()
+            self.score += 1
             return
 
         self.znake.pop()
