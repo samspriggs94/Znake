@@ -89,3 +89,16 @@ def test_food_eaten(game: ZnakeGame) -> None:
     game.move_znake()
     assert len(game.znake) == 4
     assert game.food != (6, 5)
+    assert game.score == 1
+
+
+def test_handle_restart_starts_game(game: ZnakeGame) -> None:
+    """Ensure game restart resets the game."""
+    game.znake = [(1, 1), (2, 1), (3, 1)]
+    game.awaiting_restart = True
+
+    event = MagicMock()
+    game.handle_restart(event)
+
+    assert not game.awaiting_restart
+    assert game.znake == [(6, 5), (5, 5), (4, 5)]
