@@ -25,6 +25,7 @@ class ZnakeGame:
         self.running = True
         self.awaiting_restart = False
         self.score = 0
+        self.game_loop()
 
     def handle_restart(self, event: Event) -> None:  # type: ignore[type-arg]
         """
