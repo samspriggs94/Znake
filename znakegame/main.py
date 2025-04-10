@@ -1,4 +1,5 @@
 import tkinter as tk
+from random import randint
 from tkinter import Event
 
 from znakegame.enums import GridSpecs
@@ -21,6 +22,7 @@ class ZnakeGame:
         self.direction = "Right"
         self.game_window.bind("<KeyPress>", self.change_direction)
         self.running = True
+        self.food = self.spawn_food()
         self.game_loop()
 
     def game_loop(self) -> None:
@@ -63,6 +65,7 @@ class ZnakeGame:
 
         head_x, head_y = self.znake[0]
 
+        # Wrap znake around grid if it exits an edge.
         if head_x >= GridSpecs.X_PROPORTION:
             head_x = -1
         elif head_x == -1:
@@ -82,7 +85,21 @@ class ZnakeGame:
             return
 
         self.znake.insert(0, new_head)
+        if new_head == self.food:
+            self.food = self.spawn_food()
+            return
+
         self.znake.pop()
+
+    def spawn_food(self) -> tuple[int, int]:
+        """Spawn a block of Food for the znake to eat at random co-ordinates."""
+        while True:
+            food = (
+                randint(0, GridSpecs.X_PROPORTION - 1),
+                randint(0, GridSpecs.Y_PROPORTION - 1),
+            )
+            if food not in self.znake:
+                return food
 
     def draw(self) -> None:
         """
@@ -102,6 +119,16 @@ class ZnakeGame:
                 (y + 1) * GridSpecs.GRID_SIZE,
                 fill="green",
             )
+
+        # Draw food
+        fx, fy = self.food
+        self.canvas.create_rectangle(
+            fx * GridSpecs.GRID_SIZE,
+            fy * GridSpecs.GRID_SIZE,
+            (fx + 1) * GridSpecs.GRID_SIZE,
+            (fy + 1) * GridSpecs.GRID_SIZE,
+            fill="red",
+        )
 
     @staticmethod
     def directions() -> dict[str, tuple[int, int]]:

@@ -19,4 +19,4 @@ Not only does this repo showcase solid software development principles, but ther
 ## Setting Up the Project Locally
 ⚙
 If you want to run the game locally, simply run the python executable found within the latest released version of the game.
-It currently only works on windows machines, as that's all I had to test with!
+It currently only works on Windows machines, as that's all I had to test with!

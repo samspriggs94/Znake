@@ -8,7 +8,7 @@ on:
 
 jobs:
   release:
-    name: Build and Release if Version is New
+    name: Build and Release
     runs-on: windows-latest
 
     permissions:
